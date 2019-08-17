@@ -472,3 +472,22 @@ int *ptr;           // 포인터
 int *ptr_arr[6];    // 포인터 배열
 int(*arr_ptr)[6];   // 배열 포인터
 ```
+
+```c
+#include <stdio.h>
+
+int main() {
+    int *ptr;
+    int *ptr_arr[6];
+    int(*arr_ptr)[6];
+
+    printf("포인터: %d, 포인터 배열: %d, 배열 포인터: %d", sizeof(ptr), sizeof(ptr_arr), sizeof(arr_ptr));
+}
+```
+
+> 실행화면
+```
+포인터: 8, 포인터 배열: 48, 배열 포인터: 8  // 크기(단위는 byte)
+```
+
+포인터는 64bit에서 8byte, 포인터 배열은 포인터 크기인 8byte * 6(개수) 해서 48.
