@@ -66,7 +66,7 @@ signed int의 크기: 4
 unsigned int의 크기: 4
 ```
 
->32bit 컴퓨터의 경우
+> 32bit 컴퓨터의 경우
 ```
 long의 크기: 4
 long double의 크기: 12
@@ -99,7 +99,7 @@ int main() {
 }
 ```
 
->실행결과 (64bit 컴퓨터의 경우)
+> 실행결과 (64bit 컴퓨터의 경우)
 ```
 *단위는 byte
 정수형----
@@ -119,7 +119,7 @@ signed int*의 크기: 8
 unsigned int*의 크기: 8
 ```
 
->32bit 컴퓨터의 경우
+> 32bit 컴퓨터의 경우
 ```
 포인터의 크기가 전부 4byte
 ```
@@ -164,4 +164,33 @@ int main() {
 실수 출력: 4.1e+03  //앞에서부터 2개만 보여줌. 4.1에 10^3을 해라
 문자 출력: H    //영어는 1byte인데 한글은 2byte임
 문자열 출력: 호잇~!   //char배열의 NULL문자까지 출력해라
+```
+
+### 연산자
+
+#### 증감연산자의 전위, 후위
+
+```c
+#include <stdio.h>
+
+int main() {
+    int foo = 0;
+    int hoo = 0;
+    int n = 0;
+    int m = 0;
+
+    // 후위연산 할당한 '후' 더함
+    foo = n++;
+    printf("foo==%d, n==%d\n",foo, n);
+
+    // 전위연산 할당하기 '전' 더함
+    hoo = ++m;
+    printf("hoo==%d, m==%d\n", hoo, m);
+}
+```
+
+> 실행화면
+```
+foo==0, n==1
+hoo==1, m==1
 ```
