@@ -520,3 +520,300 @@ int main() {
 `ptr_arr[i][j] == *(*(ptr_arr + i) + j)`  
 `ptr_arr[i] == *(ptr_arr + i)`  
 `ptr_arr[0] == *(ptr_arr) == *ptr_arr`
+
+### 함수
+
+```c
+#include <stdio.h>
+
+// 프로토 타입
+void swap(int*, int*);
+
+int main() {
+    int a = 4;
+    int b = 6;
+
+    swap(&a, &b);
+    printf("a: %d, b: %d", a, b);
+}
+
+void swap(int *lhs, int *rhs) {
+    int tmp = *lhs;
+    *lhs = *rhs;
+    *rhs = tmp;
+}
+```
+
+> 실행화면
+```
+a: 6, b: 4
+```
+
+### 구조체
+
+#### typedef
+
+```c
+#include <stdio.h>
+
+int main() {
+    typedef unsigned int Uint;
+    typedef int Coordinate[2];
+    typedef char *String;
+
+    Uint num = 4;
+    Coordinate xy = {6, 4};
+    String str = "흥푸임돠";
+
+    printf("num: %d\n", num);
+    printf("x: %d, y: %d\n", xy[0], xy[1]);
+    printf("%s\n", str);
+}
+```
+
+> 실행화면
+```
+num: 4
+x: 6, y: 4
+흥푸임돠
+```
+
+#### 구조체 사용법 1
+
+```c
+#include <stdio.h>
+
+int main() {
+    struct {int x, y;} coordinate;
+    coordinate.x = 4;
+    coordinate.y = 6;
+    printf("x: %d, y: %d", coordinate.x, coordinate.y);
+}
+```
+
+> 실행화면
+```
+x: 4, y: 6
+```
+
+#### 구조체 사용법 2
+
+```c
+#include <stdio.h>
+
+int main() {
+    typedef struct {
+        int x, y;
+    } Coordinate;
+    Coordinate coordinate = { 4, 6 };
+    printf("x: %d, y: %d", coordinate.x, coordinate.y);
+}
+```
+
+> 실행화면
+```
+x: 4, y: 6
+```
+
+#### 구조체 사용법 3
+
+```c
+#include <stdio.h>
+
+int main() {
+    struct Coordinate {
+        int x, y;
+    };
+    struct Coordinate coordinate = { 4, 6 };
+    printf("x: %d, y: %d", coordinate.x, coordinate.y);
+}
+```
+
+> 실행화면
+```
+x: 4, y: 6
+```
+
+### 구조체 포인터
+
+```c
+#include <stdio.h>
+
+int main() {
+    typedef struct {
+        int x, y;
+    } Coordinate;
+    Coordinate coordinate = { 4, 6 };
+    Coordinate *ptr_coordinate = &coordinate;
+    printf("x: %d, y: %d", (*ptr_coordinate).x, ptr_coordinate->y);
+}
+```
+
+> 실행화면
+```
+x: 4, y: 6
+```
+
+```c
+// Coordinate 자료형의 경우
+Coordinate *ptr_coordinate = &coordinate;
+
+// int 자료형의 경우
+int *ptr_foo = &foo;
+```
+구조체 포인터의 선언과 할당은 일반적인 경우와 같다.
+
+#### 구조체 포인터로 property 접근하기
+
+`(*ptr_coordinate).x == ptr_coordinate->x`  
+
+### 상수
+
+#### const
+
+```c
+#include <stdio.h>
+
+int main() {
+    int foo = 4;
+    foo = 6;
+    printf("%d", foo);  // 6이 출력됨.
+}
+```
+```c
+#include <stdio.h>
+
+int main() {
+    const int foo = 4;  // const가 붙어서
+    foo = 6;            // foo에 값을 할당할 수 없게됨. 에러
+    printf("%d", foo);
+}
+```
+
+#### 매크로
+
+```c
+
+#include <stdio.h>
+
+#define PI 3.141592
+
+int main() {
+    printf("파이값: %lf", PI);
+}
+```
+
+> 실행화면
+
+```
+파이값: 3.141592
+```
+
+`#define PI 3.141592`  
+컴파일할때 `PI`를 `3.141592`로 대체함  
+아래처럼 응용 가능
+
+```c
+#include <stdio.h>
+
+#define GREETING printf("holla\n");
+#define SQUARE(X) ((X) * (X))
+#define MAX(A, B) (((A) > (B)) ? (A) : (B))
+#define FOR(I, S, E) for(int I = S; I < E; I++)
+#define LOOP while (true)
+
+int main() {
+    GREETING
+    printf("%d\n", 100 / SQUARE(5));
+    printf("%d\n", MAX(4, 6));
+    FOR(i, 0, 5) {
+        printf("%d입니당\n", i);
+    }
+}
+```
+
+> 실행화면
+```
+holla
+4
+6
+0입니당
+1입니당
+2입니당
+3입니당
+4입니당
+```
+
+
+
+#### enum
+
+```c
+#include <stdio.h>
+
+enum EGAMESTATE {
+    GAMESTATE_MAINMENU = 0, // ';'을 붙이지 않고 ','로 구분
+    GAMESTATE_PLAYING = 1
+};
+
+int main() {
+    printf("main menu: %d\n", GAMESTATE_MAINMENU);
+    printf("playing: %d\n", GAMESTATE_PLAYING);
+}
+```
+
+> 실행화면
+```
+main menu: 0
+playing: 1
+```
+
+### 비트 연산자
+
+```c
+#include <stdio.h>
+
+int main() {
+    char a = 12, b = 10;
+
+    printf("%d\n", a & b);  // 둘다 1이어야 1
+    printf("%d\n", a | b);  // 하나만 1이면 1
+    printf("%d\n", a ^ b);  // 두개가 다르면 1, 같으면 0
+    printf("%d\n", ~a);     // 반전
+}
+```
+
+> 실행화면
+```
+8
+14
+6
+-13
+```
+
+```c
+#include <stdio.h>
+
+int main() {
+    char a = 22;
+
+    printf("%d\n", a << 1);     // 44
+    printf("%d\n", a << 4);     // 352
+    printf("%d\n", a << 6);     // 1408
+    printf("%d\n", a >> 1);     // 11
+    printf("%d\n", a >> 4);     // 1
+    printf("%d\n", a >> 6);     // 0
+}
+```
+
+```c
+#include <stdio.h>
+
+int main() {
+    char a = 22;
+
+    printf("%d\n", sizeof(a));          // 1
+    printf("%d\n", sizeof(a << 4));     // 4
+    printf("%d\n", sizeof(a << 6));     // 4
+}
+```
