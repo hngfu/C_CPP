@@ -194,3 +194,155 @@ int main() {
 foo==0, n==1
 hoo==1, m==1
 ```
+
+### 배열과 포인터
+
+#### 배열
+
+```c
+int arr[4]; // 4byte(int의 크기) * 4 만큼 공간이 생김
+
+int arr2[] = {1, 2, 3, 4, 5};   // 4byte * 5(5개를 넣었으니까) 만큼 공간이 생김  
+```
+
+#### 포인터
+
+```c
+#include <stdio.h>
+
+int main() {
+    int n = 1;
+    int *doo;
+    int* foo;
+
+    doo = &n;
+    foo = &n;
+
+    printf("%ld\n", *doo);
+    printf("%ld\n", *foo);
+}
+```
+
+> 실행화면
+```
+1
+1
+```
+
+#### 관계
+
+```c
+#include <stdio.h>
+
+int main() {
+    int foo[] = {1, 2, 3, 4, 5, 6};
+    printf("%ld\n", &foo[0]);
+    printf("%ld", foo);
+}
+```
+
+> 실행화면
+```
+140732891761216
+140732891761216
+```
+
+같다.  
+결국, `foo == &foo[0]`.  
+foo는 foo의 0번째 인덱스의 주소를 나타냄.  
+
+```c
+#include <stdio.h>
+
+int main() {
+    int foo[] = {1, 2, 3, 4, 5, 6};
+
+    for (int i = 0; i < 6; i++) {
+        printf("%ld %ld\n", &foo[i], foo+i);
+    }
+}
+```
+
+> 실행화면
+```
+140732704025152 140732704025152
+140732704025156 140732704025156
+140732704025160 140732704025160
+140732704025164 140732704025164
+140732704025168 140732704025168
+140732704025172 140732704025172
+```
+
+같다.  
+`&foo[0] == foo`  
+`&foo[i] == foo+i`  
+`*(&foo[i]) == foo[i] == *(foo+i)`
+
+```c
+#include <stdio.h>
+
+int main() {
+    int n = 1;
+    int *ptr_n = &n;
+
+    printf("%ld\n", ptr_n);
+    printf("%ld", ptr_n+1);
+}
+```
+
+> 실행화면
+```
+140732920425052
+140732920425056
+```
+
+4만큼 증가했다.
+
+```c
+#include <stdio.h>
+
+int main() {
+    double n = 1;
+    double *ptr_n = &n;
+
+    printf("%ld\n", ptr_n);
+    printf("%ld", ptr_n+1);
+}
+```
+
+> 실행화면
+```
+140732669139544
+140732669139552
+```
+
+8만큼 증가했다.
+
+해당 자료형의 크기만큼 움직인다는걸 알 수 있다.
+
+```c
+#include <stdio.h>
+
+int main() {
+    int arr[] = {1, 2, 3, 4, 5, 6};
+    int *ptr_arr = &arr;
+
+    printf("arr의 주소: %ld\n", &arr);
+    printf("arr의 주소 + 1: %ld\n", &arr+1);
+
+    printf("ptr_arr의 주소 + 1: %ld\n", &ptr_arr);
+    printf("ptr_arr의 주소 + 1: %ld", &ptr_arr+1);
+}
+```
+
+> 실행화면
+```
+arr의 주소: 140732790762048
+arr의 주소 + 1: 140732790762072
+ptr_arr의 주소 + 1: 140732790762040
+ptr_arr의 주소 + 1: 140732790762048
+```
+
+arr의 크기는 int 개수가 6개인 배열이기 때문에 4(sizeof(int)) * 6개해서 24가 증가되었다.  
+하지만 ptr_arr의 크기는 8이기 때문에(포인터 변수이니까) 8이 증가되었다.
+
