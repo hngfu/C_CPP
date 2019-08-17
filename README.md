@@ -134,8 +134,8 @@ int main() {
     scanf("%d %d", &first, &second);
     printf("first: %d, second: %d", first, second);
 }
-//4 3 (입력)
-//first: 4, second: 3 (출력)
+// 4 3 (입력)
+// first: 4, second: 3 (출력)
 ```
 
 #### 다양한 데이터 출력
@@ -212,19 +212,23 @@ int arr2[] = {1, 2, 3, 4, 5};   // 4byte * 5(5개를 넣었으니까) 만큼 공
 
 int main() {
     int n = 1;
-    int *doo;
     int* foo;
+    int *doo;
+    int * goo;
 
     doo = &n;
     foo = &n;
+    goo = &n;
 
     printf("%ld\n", *doo);
     printf("%ld\n", *foo);
+    printf("%ld\n", *goo);
 }
 ```
 
 > 실행화면
 ```
+1
 1
 1
 ```
@@ -346,3 +350,125 @@ ptr_arr의 주소 + 1: 140732790762048
 arr의 크기는 int 개수가 6개인 배열이기 때문에 4(sizeof(int)) * 6개해서 24가 증가되었다.  
 하지만 ptr_arr의 크기는 8이기 때문에(포인터 변수이니까) 8이 증가되었다.
 
+```c
+#include <stdio.h>
+
+int main() {
+    int arr[4];
+    int *ptr_arr = arr;
+
+    for (int i = 0; i < 4; i++) {
+        printf("%ld %ld\n", &arr[i], &ptr_arr[i]);
+    }
+}
+```
+
+> 실행화면
+```
+140732768811584 140732768811584
+140732768811588 140732768811588
+140732768811592 140732768811592
+140732768811596 140732768811596
+```
+
+#### 배열포인터
+
+```c
+int arr[] = {1, 2, 3, 4, 5, 6};
+
+// 배열 포인터
+int (*ptr_arr)[3] = arr;
+// or
+int(*ptr_arr)[3] = arr;
+```
+
+```c
+#include <stdio.h>
+
+int main() {
+    int arr[] = {1, 2, 3, 4, 5, 6};
+    int (*ptr_arr)[3] = arr;
+    for (int i = 0; i < 2; i++) {
+        for (int j = 0; j < 3; j++) {
+            printf("%d\n", ptr_arr[i][j]);
+        }
+    }
+}
+```
+
+>  실행화면
+```
+1
+2
+3
+4
+5
+6
+```
+
+```c
+#include <stdio.h>
+
+int main() {
+    int arr[2][3] = {{1, 2, 3,}, {4, 5, 6,}};
+
+    for (int(*row)[3] = arr; row < arr + 2; row++) {
+        for (int(*col) = *row; col < *row + 3; col++) {
+            printf("%d ", *col);
+        }
+        printf("\n");
+    }
+}
+```
+
+> 실행화면
+```
+1 2 3 
+4 5 6 
+```
+
+```c
+int(*row)[3] // 4byte * 3의 배열을 가리키는 배열 포인터
+
+int(*col);
+// ==
+int *col;
+```
+
+#### 포인터 배열
+
+```c
+#include <stdio.h>
+
+int main() {
+    int arr[] = {1, 2, 3, 4, 5, 6};
+
+    int *ptr_arr[6];
+
+    for (int i = 0; i < 6; i++) {
+        ptr_arr[i] = &arr[i];
+    }
+
+    for (int i = 0; i < 6; i++) {
+        printf("%d\n", *ptr_arr[i]);
+    }
+}
+```
+
+> 실행화면
+```
+1
+2
+3
+4
+5
+6
+```
+
+#### 정리
+
+```c
+int *ptr;           // 포인터
+int *ptr_arr[6];    // 포인터 배열
+int(*arr_ptr)[6];   // 배열 포인터
+```
