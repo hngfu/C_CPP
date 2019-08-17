@@ -491,3 +491,32 @@ int main() {
 ```
 
 포인터는 64bit에서 8byte, 포인터 배열은 포인터 크기인 8byte * 6(개수) 해서 48.
+
+```c
+#include <stdio.h>
+
+int main() {
+    int arr[] = {2, 4, 6, 8, 10, 12};
+    int (*ptr_arr)[3] = arr;
+    for (int i = 0; i < 2; i++) {
+        for (int j = 0; j < 3; j++) {
+            printf("%ld ", ptr_arr[i][j]);
+            printf("%ld\n", *(*(ptr_arr + i) + j));
+        }
+    }
+}
+```
+
+> 실행화면
+```
+2 2
+4 4
+6 6
+8 8
+10 10
+12 12
+```
+
+`ptr_arr[i][j] == *(*(ptr_arr + i) + j)`  
+`ptr_arr[i] == *(ptr_arr + i)`  
+`ptr_arr[0] == *(ptr_arr) == *ptr_arr`
