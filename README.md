@@ -16,4 +16,10 @@
 [상수](/C/constant.md)  
 [비트 연산자](/C/bitOperator.md)  
 [파일 입출력](/C/fileInOut.md)  
-[몇몇 유용한 함수들](/C/usefulFunctions.md)  
+[몇몇 유용한 함수들](/C/usefulFunctions.md)
+
+## C++
+
+### 목차
+
+[입출력](/C++/inOut.md)
