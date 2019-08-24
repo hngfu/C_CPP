@@ -32,4 +32,62 @@
 [생성자, 소멸자](/C++/constructorDestructor.md)  
 [생성자 응용](/C++/constructorApplication.md)  
 [정적 멤버](/C++/staticMember.md)  
-[상수화](/C++/toConstant.md)
+[상수화](/C++/toConstant.md)  
+[메서드 선언, 정의 분리](/C++/methodSeparation.md)  
+[연산자 오버로딩](/C++/operatorOverloading.md)  
+[할당](/C++/allocate.md)  
+[복사](/C++/copy.md)  
+[동적 할당과 객체 복사](/C++/allocateAndCopy.md)  
+[형변환](/C++/typeCasting.md)  
+[상속](/C++/inheritance.md)  
+[오버라이드](/C++/override.md)  
+[가상 함수](/C++/virtualFunc.md)  
+
+
+
+# 가상 함수와 동적 바인딩
+
+```c++
+#include <iostream>
+
+using namespace std;
+
+class Weapon {
+public:
+    virtual void Attack() { // here!
+        cout << "Weapon으로 attack." << endl;
+    }
+};
+
+class Bow: public Weapon {
+public:
+    void Attack() {
+        cout << "휙 화쌀~ 휙 화쌀~ 휙 휙~~" << endl;
+    }
+};
+
+class Magic: public Weapon {
+public:
+    void Attack() {
+        cout << "윙가르디움 레비오우사" << endl;
+    }
+};
+
+int main() {
+    Weapon *weapon;
+    Bow bow;
+    Magic magic;
+
+    weapon = &bow;
+    weapon->Attack();
+    weapon = &magic;
+    weapon->Attack();
+
+}
+```
+
+> 실행화면
+```
+휙 화쌀~ 휙 화쌀~ 휙 휙~~
+윙가르디움 레비오우사
+```
